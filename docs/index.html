@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ashes of Azure Peak · Story map</title>
+<style>
+:root{--bg:#f5f4f0;--panel:#fffffe;--line:#e3e1da;--fg:#1c1e22;--mut:#6a6f78;--edge:#8f96a1;--gone:#c4c4c4;--accent:#2f62e8;--chip:#efeee9}
+@media (prefers-color-scheme:dark){:root{--bg:#111316;--panel:#191c21;--line:#2a2e35;--fg:#e7e8ea;--mut:#8c929c;--edge:#5d6470;--gone:#3a3e45;--accent:#7ba0ff;--chip:#23272d}}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font:13px/1.45 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow:hidden}
+button,input,select{font:inherit;color:inherit}
+#app{display:grid;grid-template-columns:236px 1fr 340px;grid-template-rows:50px 1fr 72px;height:100%}
+header{grid-column:1/4;display:flex;align-items:center;gap:10px;padding:0 14px;background:var(--panel);border-bottom:1px solid var(--line);min-width:0}
+header h1{font-size:15px;font-weight:650;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:32vw}
+header .genre{color:var(--mut);white-space:nowrap}
+.sp{flex:1}
+.ctl{display:flex;align-items:center;gap:6px}
+.btn{background:var(--chip);border:1px solid var(--line);border-radius:7px;padding:4px 10px;cursor:pointer;white-space:nowrap}
+.btn:hover{border-color:var(--mut)}
+.btn.on{background:var(--accent);border-color:var(--accent);color:#fff}
+#q{width:220px;background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:5px 9px;outline:none}
+#q:focus{border-color:var(--accent)}
+#chn{width:64px;background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:4px 6px;text-align:right}
+aside{background:var(--panel);overflow:auto;padding:12px 14px}
+#left{border-right:1px solid var(--line)}
+#right{border-left:1px solid var(--line)}
+#stage{position:relative;min-width:0;min-height:0}
+#cv,#tl{display:block;width:100%;height:100%;touch-action:none}
+#tlwrap{grid-column:1/4;border-top:1px solid var(--line);background:var(--panel);position:relative}
+h2{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);margin:16px 0 6px;font-weight:600}
+h2:first-child{margin-top:0}
+.row{display:flex;align-items:center;gap:8px;padding:3px 0;cursor:pointer;user-select:none}
+.row input{margin:0}
+.dot{width:10px;height:10px;border-radius:50%;flex:none}
+.cnt{margin-left:auto;color:var(--mut);font-variant-numeric:tabular-nums}
+.off{opacity:.38}
+.seg{display:flex;border:1px solid var(--line);border-radius:7px;overflow:hidden}
+.seg button{flex:1;background:none;border:0;padding:4px 0;cursor:pointer}
+.seg button.on{background:var(--accent);color:#fff}
+.stats div{display:flex;justify-content:space-between;padding:2px 0}
+.stats b{font-variant-numeric:tabular-nums}
+#right .empty{color:var(--mut);margin-top:8px}
+.ttl{font-size:18px;font-weight:650;margin:0 0 4px;line-height:1.25}
+.tag{display:inline-block;padding:1px 8px;border-radius:99px;background:var(--chip);color:var(--mut);margin:0 4px 4px 0;font-size:12px}
+.tag.dead{background:#b3261e;color:#fff}.tag.alive{background:#1f8a4c;color:#fff}.tag.missing,.tag.sealed{background:#a86b00;color:#fff}
+.muted{color:var(--mut)}
+.fate{border-left:3px solid #b3261e;padding:4px 8px;margin:8px 0;background:var(--chip);border-radius:0 6px 6px 0}
+dl{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;margin:4px 0}
+dt{color:var(--mut)}dd{margin:0}
+ul{list-style:none;margin:0;padding:0}
+li{padding:3px 0;border-bottom:1px dashed var(--line)}
+li:last-child{border:0}
+a.lnk{color:var(--accent);cursor:pointer;text-decoration:none}
+a.lnk:hover{text-decoration:underline}
+.future{opacity:.35}
+.ch{color:var(--mut);font-variant-numeric:tabular-nums;margin-right:4px}
+#tip{position:fixed;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 9px;box-shadow:0 6px 24px rgba(0,0,0,.18);max-width:300px;font-size:12px;display:none;z-index:9}
+#hint{position:absolute;left:12px;bottom:10px;color:var(--mut);font-size:12px;pointer-events:none}
+.mob{display:none}
+@media (max-width:900px){
+ #app{grid-template-columns:1fr;grid-template-rows:auto 1fr 72px}
+ header{flex-wrap:wrap;padding:8px 12px;gap:8px}header h1{max-width:60vw}#q{width:100%;order:9}
+ aside{position:fixed;top:0;bottom:72px;width:min(88vw,340px);z-index:5;display:none;box-shadow:0 0 40px rgba(0,0,0,.3)}
+ #left{left:0}#right{right:0}aside.open{display:block}.mob{display:inline-block}#hint{display:none}
+ #tlwrap{grid-column:1}
+}
+</style>
+</head>
+<body>
+<div id="app">
+ <header>
+  <button class="btn mob" id="bL">☰</button>
+  <h1 id="title"></h1><span class="genre" id="genre"></span>
+  <div class="sp"></div>
+  <input id="q" list="names" placeholder="Search…  ( / )" autocomplete="off"><datalist id="names"></datalist>
+  <div class="ctl"><button class="btn" id="play" title="Play timeline (space)">▶</button>
+   <span class="muted">ch</span><input id="chn" type="number" min="1"><span class="muted" id="chmax"></span></div>
+  <button class="btn" id="fit" title="Fit (F)">Fit</button>
+  <button class="btn mob" id="bR">ⓘ</button>
+ </header>
+ <aside id="left">
+  <h2>Show</h2><div id="types"></div>
+  <h2>Filters</h2>
+  <label class="row"><input type="checkbox" id="fGone" checked> dead &amp; destroyed</label>
+  <label class="row"><input type="checkbox" id="fEnded"> ended relations</label>
+  <label class="row"><input type="checkbox" id="fCo"> shared-chapter links</label>
+  <label class="row"><input type="checkbox" id="fThreads" checked> plot threads</label>
+  <label class="row"><input type="checkbox" id="fClosed"> closed threads</label>
+  <label class="row"><input type="checkbox" id="fMinor" checked> minor (tier 3)</label>
+  <h2>Labels</h2><div class="seg" id="labels"><button data-v="auto" class="on">auto</button><button data-v="all">all</button><button data-v="none">none</button></div>
+  <h2>Focus around selection</h2><div class="seg" id="depth"><button data-v="0" class="on">off</button><button data-v="1">1 hop</button><button data-v="2">2 hops</button></div>
+  <h2>As of chapter <span id="asof"></span></h2><div class="stats" id="stats"></div>
+  <h2>Layout</h2>
+  <div class="ctl" style="flex-wrap:wrap"><button class="btn" id="relayout">Re-layout</button><button class="btn" id="png">Save PNG</button></div>
+  <p class="muted" style="margin-top:14px;font-size:12px">Drag nodes to pin them · double-click to unpin · scroll to zoom · drag the timeline to travel through the story.</p>
+ </aside>
+ <div id="stage"><canvas id="cv"></canvas><div id="hint"></div></div>
+ <aside id="right"><div class="empty">Click a node to see its history, relations and fate.<br><br>Timeline: blue ticks are events, red are deaths, pink are planted threads.</div></aside>
+ <div id="tlwrap"><canvas id="tl"></canvas></div>
+</div>
+<div id="tip"></div>
+<script>
+"use strict";
+const D={"title":"Ashes of Azure Peak","genre":"dark cultivation","max":8,"nodes":[{"id":"lin-feng","n":"Lin Feng","t":"character","s":"alive","tier":1,"al":["Feng"],"desc":"Outer disciple, orphan; sweeps the Medicine Hall","fate":"","attrs":{"realm":"Foundation 1","location":"Inner court, Azure Sect","rank":"inner-court servant"},"f":1,"l":8,"d":null,"a":8,"h":[[3,"attr.injury","","shallow cut, throat",""],[4,"attr.realm","Qi Condensation 3","Foundation 1","breakthrough on the Black River ice"],[4,"attr.injury","shallow cut, throat","∅","breakthrough on the Black River ice"],[5,"note","","knows Wei Shan bought the poison; told no one",""],[7,"attr.location","Azure Sect","Inner court, Azure Sect","chosen by Sect Master Su"],[7,"attr.rank","","inner-court servant","chosen by Sect Master Su"]]},{"id":"elder-mo","n":"Elder Mo","t":"character","s":"dead","tier":2,"al":[],"desc":"Medicine Hall elder; keeps his own counsel","fate":"Poisoned through the tea Lin Feng brewed; body burned on Wei Shan's order","attrs":{},"f":1,"l":5,"d":2,"a":4,"h":[[2,"status","alive","dead",""],[2,"fate","","Poisoned through the tea Lin Feng brewed; body burned on Wei Shan's order",""]]},{"id":"mo-qing","n":"Mo Qing","t":"character","s":"alive","tier":1,"al":[],"desc":"Elder Mo's nephew, inner disciple","fate":"","attrs":{"realm":"Foundation 1"},"f":1,"l":6,"d":null,"a":5,"h":[]},{"id":"su-yan","n":"Su Yan","t":"character","s":"alive","tier":1,"al":[],"desc":"Sect master's daughter","fate":"","attrs":{"realm":"Foundation 3"},"f":1,"l":7,"d":null,"a":3,"h":[]},{"id":"sect-master-su","n":"Sect Master Su","t":"character","s":"alive","tier":2,"al":["the Sect Master"],"desc":"Head of the Azure Sect; Su Yan's father","fate":"","attrs":{},"f":1,"l":7,"d":null,"a":2,"h":[]},{"id":"azure-sect","n":"Azure Sect","t":"location","s":"active","tier":1,"al":[],"desc":"","fate":"","attrs":{},"f":1,"l":1,"d":null,"a":1,"h":[]},{"id":"medicine-hall","n":"Medicine Hall","t":"location","s":"active","tier":2,"al":[],"desc":"","fate":"","attrs":{},"f":1,"l":5,"d":null,"a":3,"h":[]},{"id":"black-river","n":"Black River","t":"location","s":"active","tier":2,"al":[],"desc":"","fate":"","attrs":{},"f":1,"l":4,"d":null,"a":3,"h":[]},{"id":"mo-clan","n":"Mo Clan","t":"faction","s":"active","tier":2,"al":[],"desc":"Old alchemy clan, fallen from favour","fate":"","attrs":{},"f":1,"l":3,"d":null,"a":2,"h":[]},{"id":"jade-pendant","n":"Jade Pendant","t":"item","s":"active","tier":1,"al":[],"desc":"Cracked pendant from his mother","fate":"","attrs":{},"f":1,"l":3,"d":null,"a":3,"h":[[2,"status","active","lost",""],[3,"status","lost","active",""]]},{"id":"wei-shan","n":"Wei Shan","t":"character","s":"missing","tier":2,"al":[],"desc":"Medicine Hall steward, newly appointed","fate":"","attrs":{},"f":2,"l":8,"d":null,"a":5,"h":[[8,"status","alive","missing","fled the sect after the failed poisoning"]]},{"id":"old-hua","n":"Old Hua","t":"character","s":"missing","tier":3,"al":[],"desc":"Ferry woman on the Black River","fate":"","attrs":{"location":"Black River"},"f":3,"l":4,"d":null,"a":2,"h":[[4,"status","alive","missing",""]]},{"id":"black-heartroot","n":"Black Heartroot","t":"item","s":"active","tier":3,"al":[],"desc":"Slow poison used in alchemy","fate":"","attrs":{},"f":5,"l":8,"d":null,"a":2,"h":[]}],"edges":[[0,9,"owns",1,2],[1,8,"member of",1,null],[2,8,"member of",1,null],[1,2,"uncle of",1,null],[6,5,"part of",1,null],[4,5,"leads",1,null],[4,3,"father of",1,null],[2,0,"despises",1,null],[2,0,"suspects",2,6],[11,9,"owns",3,null],[3,0,"watches",4,null],[4,0,"employs",7,null],[10,4,"tried to poison",8,null]],"co":[[0,10,5,2],[0,2,5,1],[0,1,4,1],[1,2,4,1],[2,10,3,2],[0,9,3,1],[2,9,3,1],[0,7,3,1],[1,9,3,1],[2,6,3,1],[0,6,3,1],[1,6,3,1],[0,3,3,1],[6,10,2,2],[0,11,2,3],[3,7,2,1],[0,12,2,5],[7,9,2,1],[10,12,2,5],[7,11,2,3]],"threads":[{"id":"who-forged-the-pendant","n":"Who forged the pendant?","k":"foreshadow","s":"open","f":1,"c":null,"p":40,"inv":[0,9,8],"notes":[[1,"planned reveal: Mo Clan made it for Feng's mother"],[2,"pendant stolen the night Mo dies"],[3,"crest is the Mo Clan seal"]]},{"id":"who-poisoned-elder-mo","n":"Who poisoned Elder Mo?","k":"mystery","s":"open","f":2,"c":null,"p":30,"inv":[1,0,10,12],"notes":[[5,"ledger: Wei Shan bought black heartroot twice in Mo's name; only Feng knows"],[8,"Wei Shan's second attempt (on Sect Master Su) foiled; he flees"]]},{"id":"what-does-mo-qing-want","n":"What does Mo Qing want?","k":"mystery","s":"closed","f":3,"c":6,"p":12,"inv":[2,0],"notes":[[6,"a letter Elder Mo kept for Feng; burned by Wei Shan"]]},{"id":"elder-mo-s-letter","n":"Elder Mo's letter","k":"mystery","s":"open","f":6,"c":null,"p":60,"inv":[1,0,10],"notes":[[6,"burned, but did someone copy it?"]]},{"id":"how-did-the-sect-master-know","n":"How did the Sect Master know?","k":"mystery","s":"open","f":7,"c":null,"p":20,"inv":[4,3,0],"notes":[]}],"events":[[2,"Death of Elder Mo",[1,0,2,10],"",""],[4,"Lin Feng reaches Foundation",[0,3],"",""],[8,"Koi of the inner garden",[0,10,4],"Feng foils the poisoning",""]],"chapters":{"1":"Chapter 1: Cold Pills","2":"Chapter 2: The Elder's Cup","3":"Chapter 3: Ash on the River","4":"Chapter 4: Foundation","5":"Chapter 5: Ledgers","6":"Chapter 6: The Steps","7":"Chapter 7: The Sect Master's Garden","8":"Chapter 8: Heartroot"}};
+const COL={character:"#e5734f",location:"#3fa86f",faction:"#8676ee",item:"#d99a2b",power:"#24a9c2",concept:"#8e98a8",thread:"#dc5596"};
+const LABEL={character:"Characters",location:"Locations",faction:"Factions",item:"Items",power:"Powers",concept:"Concepts",thread:"Threads"};
+const $=s=>document.querySelector(s), esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+/* ───────── model ───────── */
+const N=[],L=[];
+D.nodes.forEach((n,i)=>N.push({...n,i,kind:"entity",deg:0,adj:new Set()}));
+const TOFF=N.length;
+D.threads.forEach((t,j)=>N.push({id:"t:"+t.id,n:t.n,t:"thread",s:t.s,f:t.f,d:t.c,tier:2,a:2+t.inv.length,i:TOFF+j,kind:"thread",th:t,deg:0,adj:new Set()}));
+D.edges.forEach(([a,b,rel,since,until])=>L.push({a,b,rel,since,until,kind:"rel"}));
+D.threads.forEach((t,j)=>t.inv.forEach(x=>L.push({a:TOFF+j,b:x,rel:"",since:t.f,until:t.c,kind:"thr"})));
+const COMAX=Math.max(1,...(D.co||[]).map(c=>c[2]));
+(D.co||[]).forEach(([a,b,n,first])=>L.push({a,b,rel:n+" shared chapters",since:first,until:null,kind:"co",w:n/COMAX}));
+L.forEach(l=>{N[l.a].deg++;N[l.b].deg++;N[l.a].adj.add(l.b);N[l.b].adj.add(l.a)});
+N.forEach(n=>{n.r=Math.min(30,4+Math.sqrt(n.a||1)*1.7+(n.tier===1?4:0));n.x=0;n.y=0;n.vx=0;n.vy=0;n.fx=null});
+const evByNode=new Map(),thByNode=new Map();
+D.events.forEach((e,k)=>e[2].forEach(x=>{if(!evByNode.has(x))evByNode.set(x,[]);evByNode.get(x).push(k)}));
+D.threads.forEach((t,j)=>t.inv.forEach(x=>{if(!thByNode.has(x))thByNode.set(x,[]);thByNode.get(x).push(TOFF+j)}));
+
+/* ───────── state ───────── */
+const S={ch:D.max,types:new Set(Object.keys(COL)),gone:true,ended:false,co:false,threads:true,closed:false,minor:true,labels:"auto",depth:0,sel:-1,hov:-1,
+  k:1,tx:0,ty:0,alpha:1,dirty:true,playing:false};
+const LKEY="ink-layout:"+D.title;
+
+/* ───────── visibility ───────── */
+let vis=new Uint8Array(N.length),focusSet=null;
+const GONE=new Set(["dead","destroyed","lost"]);
+// status as of chapter c: final status rewound through later status changes
+function statusAt(n,c){if(n.kind==="thread")return n.d&&n.d<=c?n.s:"open";let s=n.s;
+  for(let k=n.h.length-1;k>=0;k--){const h=n.h[k];if(h[0]<=c)break;if(h[1]==="status")s=h[2]||(n.t==="character"?"alive":"active")}return s}
+function goneAt(n,c){return n.cs!==undefined&&S.ch===c?(n.kind==="thread"?n.cs!=="open":GONE.has(n.cs)):(n.kind==="thread"?!!(n.d&&n.d<=c):GONE.has(statusAt(n,c)))}
+function computeVis(){
+  const c=S.ch;
+  for(const n of N)n.cs=statusAt(n,c);
+  for(const n of N){
+    let v=(!n.f||n.f<=c)&&S.types.has(n.t);
+    if(v&&n.kind==="thread")v=S.threads&&(S.closed||!goneAt(n,c));
+    if(v&&n.kind==="entity"){if(!S.gone&&goneAt(n,c))v=false;if(!S.minor&&n.tier===3)v=false}
+    vis[n.i]=v?1:0;
+  }
+  focusSet=null;
+  if(S.depth>0&&S.sel>=0&&vis[S.sel]){
+    focusSet=new Set([S.sel]);let fr=[S.sel];
+    for(let d=0;d<S.depth;d++){const nx=[];for(const x of fr)for(const y of N[x].adj)if(vis[y]&&!focusSet.has(y)&&edgeVisBetween(x,y)){focusSet.add(y);nx.push(y)}fr=nx}
+    for(const n of N)if(!focusSet.has(n.i))vis[n.i]=0;
+  }
+  S.dirty=true;updateStats();
+}
+function edgeVis(l){if(l.kind==="co"&&!S.co)return 0;if(!vis[l.a]||!vis[l.b])return 0;if(l.since&&l.since>S.ch)return 0;if(l.until&&l.until<=S.ch)return S.ended?2:0;return 1}
+function edgeVisBetween(x,y){return L.some(l=>((l.a===x&&l.b===y)||(l.a===y&&l.b===x))&&edgeVis(l))}
+
+/* ───────── layout: Barnes–Hut force simulation ───────── */
+function seed(){
+  const saved=store.get(LKEY)||{};let hit=0;
+  const order=[...N].sort((a,b)=>b.deg-a.deg);
+  order.forEach((n,k)=>{const p=saved[n.id];if(p){n.x=p[0];n.y=p[1];hit++}else{const a=k*2.39996,r=12*Math.sqrt(k+1);n.x=r*Math.cos(a);n.y=r*Math.sin(a)}});
+  // place new nodes next to an already-positioned neighbour
+  if(hit)for(const n of N)if(!saved[n.id]){for(const j of n.adj)if(saved[N[j].id]){n.x=N[j].x+(Math.random()-.5)*40;n.y=N[j].y+(Math.random()-.5)*40;break}}
+  S.alpha=hit>=N.length*0.9?0.08:1;
+}
+function tick(){
+  const n=N.length;if(!n)return;
+  let minX=1e9,minY=1e9,maxX=-1e9,maxY=-1e9;
+  for(const p of N){if(p.x<minX)minX=p.x;if(p.y<minY)minY=p.y;if(p.x>maxX)maxX=p.x;if(p.y>maxY)maxY=p.y}
+  const size=Math.max(maxX-minX,maxY-minY)+1;
+  // flat quadtree
+  const cap=n*4+16;const cx=new Float64Array(cap),cy=new Float64Array(cap),m=new Float64Array(cap),ch=new Int32Array(cap*4).fill(-1),leaf=new Int32Array(cap).fill(-1),bx=new Float64Array(cap),by=new Float64Array(cap),bs=new Float64Array(cap);
+  let cnt=1;bx[0]=minX;by[0]=minY;bs[0]=size;
+  const W_=p=>p.r*3+30;
+  const insert=(pi)=>{const p=N[pi],w=W_(p);let q=0,depth=0;
+    for(;;){
+      const isLeafless=ch[q*4]===-1;
+      if(isLeafless&&leaf[q]===-1&&m[q]===0){leaf[q]=pi;m[q]=w;cx[q]=p.x*w;cy[q]=p.y*w;return}
+      if(isLeafless){ // occupied leaf: split (unless too deep — then just merge mass)
+        if(depth>40||cnt+4>=cap){m[q]+=w;cx[q]+=p.x*w;cy[q]+=p.y*w;return}
+        const h=bs[q]/2;for(let k=0;k<4;k++){const c=cnt++;bx[c]=bx[q]+(k&1)*h;by[c]=by[q]+(k>>1)*h;bs[c]=h;ch[q*4+k]=c}
+        const o=leaf[q];leaf[q]=-1;const op=N[o],ow=W_(op);
+        const c=ch[q*4+(op.x>=bx[q]+h?1:0)+(op.y>=by[q]+h?2:0)];leaf[c]=o;m[c]=ow;cx[c]=op.x*ow;cy[c]=op.y*ow}
+      m[q]+=w;cx[q]+=p.x*w;cy[q]+=p.y*w;
+      const h=bs[q]/2;q=ch[q*4+(p.x>=bx[q]+h?1:0)+(p.y>=by[q]+h?2:0)];depth++}};
+  for(let i=0;i<n;i++)insert(i);
+  const a=S.alpha,theta2=0.81,stack=new Int32Array(cap);
+  for(let i=0;i<n;i++){const p=N[i];let sp=0;stack[sp++]=0;let fx=0,fy=0;const pw=W_(p);
+    while(sp){const q=stack[--sp];if(!m[q])continue;const qx=cx[q]/m[q],qy=cy[q]/m[q];let dx=qx-p.x,dy=qy-p.y,d2=dx*dx+dy*dy;
+      if(leaf[q]===i&&ch[q*4]===-1)continue;
+      if(ch[q*4]===-1||bs[q]*bs[q]<theta2*d2){if(d2<1){dx=Math.random()-.5;dy=Math.random()-.5;d2=1}
+        const f=-m[q]*pw*0.012/d2;fx+=dx*f;fy+=dy*f}
+      else for(let k=0;k<4;k++)if(ch[q*4+k]>=0)stack[sp++]=ch[q*4+k]}
+    p.vx+=fx*a;p.vy+=fy*a}
+  for(const l of L){const s=N[l.a],t=N[l.b];let dx=t.x-s.x,dy=t.y-s.y,d=Math.sqrt(dx*dx+dy*dy)||1;
+    const want=(l.kind==="thr"?70:l.kind==="co"?60:45)+s.r+t.r,str=(l.kind==="thr"?0.25:l.kind==="co"?0.12+0.3*l.w:0.5)/Math.min(s.deg,t.deg),f=(d-want)/d*str*a;
+    dx*=f;dy*=f;const bs_=s.deg/(s.deg+t.deg);t.vx-=dx*bs_;t.vy-=dy*bs_;s.vx+=dx*(1-bs_);s.vy+=dy*(1-bs_)}
+  for(const p of N){const gr=p.deg?0.004:0.03;p.vx-=p.x*gr*a;p.vy-=p.y*gr*a;
+    if(p.fx!=null){p.x=p.fx;p.y=p.fy;p.vx=p.vy=0;continue}
+    p.vx*=0.6;p.vy*=0.6;p.x+=p.vx;p.y+=p.vy}
+  S.alpha*=0.985;S.dirty=true;
+}
+function saveLayout(){const o={};for(const n of N)o[n.id]=[Math.round(n.x),Math.round(n.y)];store.set(LKEY,o)}
+
+/* ───────── canvas ───────── */
+const cv=$("#cv"),ctx=cv.getContext("2d"),tl=$("#tl"),tctx=tl.getContext("2d");let W=0,H=0,TW=0,TH=0,DPR=1,css={};
+function readCss(){const s=getComputedStyle(document.documentElement);for(const k of["bg","panel","line","fg","mut","edge","gone","accent"])css[k]=s.getPropertyValue("--"+k).trim();S.dirty=true;drawTL()}
+function resize(){DPR=window.devicePixelRatio||1;const r=cv.parentElement.getBoundingClientRect();W=r.width;H=r.height;cv.width=W*DPR;cv.height=H*DPR;
+  const t=tl.parentElement.getBoundingClientRect();TW=t.width;TH=t.height;tl.width=TW*DPR;tl.height=TH*DPR;S.dirty=true;drawTL()}
+const toS=(x,y)=>[x*S.k+S.tx+W/2,y*S.k+S.ty+H/2],toW=(x,y)=>[(x-W/2-S.tx)/S.k,(y-H/2-S.ty)/S.k];
+
+function draw(){
+  ctx.setTransform(DPR,0,0,DPR,0,0);ctx.clearRect(0,0,W,H);
+  ctx.translate(W/2+S.tx,H/2+S.ty);ctx.scale(S.k,S.k);
+  const focus=S.hov>=0?S.hov:S.sel,lw=1/S.k;let nb=null;
+  if(focus>=0){nb=new Set();for(const l of L)if((l.a===focus||l.b===focus)&&edgeVis(l))nb.add(l.a===focus?l.b:l.a)}
+  const [x0,y0]=toW(0,0),[x1,y1]=toW(W,H),pad=40/S.k;
+  const onscreen=n=>n.x>x0-pad&&n.x<x1+pad&&n.y>y0-pad&&n.y<y1+pad;
+  // edges batched by style
+  const P={norm:new Path2D(),hi:new Path2D(),thr:new Path2D(),end:new Path2D(),co:new Path2D()};
+  for(const l of L){const v=edgeVis(l);if(!v)continue;const s=N[l.a],t=N[l.b];if(!onscreen(s)&&!onscreen(t))continue;
+    const hl=focus>=0&&(l.a===focus||l.b===focus);const p=v===2?P.end:hl?P.hi:l.kind==="thr"?P.thr:l.kind==="co"?P.co:P.norm;p.moveTo(s.x,s.y);p.lineTo(t.x,t.y)}
+  const dim=focus>=0;
+  ctx.lineWidth=lw;ctx.globalAlpha=dim?0.05:0.18;ctx.strokeStyle=css.accent;ctx.stroke(P.co);
+  ctx.globalAlpha=dim?0.12:0.45;ctx.strokeStyle=css.edge;ctx.stroke(P.norm);
+  ctx.setLineDash([2*lw,4*lw]);ctx.strokeStyle=COL.thread;ctx.globalAlpha=dim?0.08:0.35;ctx.stroke(P.thr);
+  ctx.strokeStyle=css.edge;ctx.globalAlpha=dim?0.06:0.25;ctx.stroke(P.end);ctx.setLineDash([]);
+  ctx.globalAlpha=0.95;ctx.lineWidth=1.6*lw;ctx.strokeStyle=css.accent;ctx.stroke(P.hi);ctx.globalAlpha=1;
+  // nodes
+  const labels=[];
+  for(const n of N){if(!vis[n.i]||!onscreen(n))continue;
+    const gone=goneAt(n,S.ch),isF=n.i===focus,isN=nb&&nb.has(n.i),faded=dim&&!isF&&!isN;
+    ctx.globalAlpha=faded?0.18:1;
+    const c=gone?css.gone:COL[n.t];
+    ctx.beginPath();
+    if(n.kind==="thread"){const r=n.r*1.1;ctx.moveTo(n.x,n.y-r);ctx.lineTo(n.x+r,n.y);ctx.lineTo(n.x,n.y+r);ctx.lineTo(n.x-r,n.y);ctx.closePath()}
+    else ctx.arc(n.x,n.y,n.r,0,6.2832);
+    ctx.fillStyle=c;ctx.fill();
+    if(n.kind==="entity"&&(n.cs==="missing"||n.cs==="sealed")){ctx.setLineDash([3*lw,3*lw]);ctx.lineWidth=2*lw;ctx.strokeStyle=css.fg;ctx.stroke();ctx.setLineDash([])}
+    if(gone&&n.t==="character"){const r=n.r*.55;ctx.beginPath();ctx.moveTo(n.x,n.y-r);ctx.lineTo(n.x,n.y+r);ctx.moveTo(n.x-r*.6,n.y-r*.35);ctx.lineTo(n.x+r*.6,n.y-r*.35);ctx.lineWidth=Math.max(1.2*lw,n.r*.14);ctx.strokeStyle=css.mut;ctx.stroke()}
+    if(n.fx!=null){ctx.beginPath();ctx.arc(n.x,n.y,n.r+3*lw,0,6.2832);ctx.lineWidth=lw;ctx.strokeStyle=css.mut;ctx.stroke()}
+    if(n.i===S.sel){ctx.beginPath();ctx.arc(n.x,n.y,n.r+5*lw,0,6.2832);ctx.lineWidth=2.5*lw;ctx.strokeStyle=css.accent;ctx.stroke()}
+    const show=S.labels==="all"||(S.labels==="auto"&&(isF||isN||n.tier===1||n.r*S.k>9));
+    if(show&&S.labels!=="none"&&!faded)labels.push(n);
+  }
+  ctx.globalAlpha=1;
+  // labels in screen space, highest priority first, skip overlaps
+  ctx.setTransform(DPR,0,0,DPR,0,0);ctx.textAlign="center";ctx.textBaseline="top";
+  labels.sort((a,b)=>(b.i===focus)-(a.i===focus)||b.r-a.r);
+  const placed=[];let budget=S.labels==="all"?5000:400;
+  for(const n of labels){if(!budget--)break;const [sx,sy]=toS(n.x,n.y);const fs=n.i===focus?13:Math.min(13,10+n.r*S.k/10);
+    ctx.font=(n.tier===1||n.i===focus?"600 ":"")+fs+"px ui-sans-serif,system-ui,sans-serif";
+    const txt=(goneAt(n,S.ch)&&n.t==="character"?"✝ ":"")+n.n,w=ctx.measureText(txt).width,y=sy+n.r*S.k+3;
+    const box=[sx-w/2-2,y,w+4,fs+2];
+    if(n.i!==focus&&placed.some(b=>box[0]<b[0]+b[2]&&box[0]+box[2]>b[0]&&box[1]<b[1]+b[3]&&box[1]+box[3]>b[1]))continue;
+    placed.push(box);ctx.lineWidth=3;ctx.strokeStyle=css.bg;ctx.strokeText(txt,sx,y);ctx.fillStyle=goneAt(n,S.ch)?css.mut:css.fg;ctx.fillText(txt,sx,y)}
+  S.dirty=false;
+}
+
+/* ───────── timeline strip ───────── */
+const TPAD=18,TL0=64;const chX=c=>TL0+(c-1)/Math.max(1,D.max-1)*(TW-TL0-TPAD),xCh=x=>Math.round(Math.min(D.max,Math.max(1,1+(x-TL0)/(TW-TL0-TPAD)*(D.max-1))));
+const deaths=N.filter(n=>n.kind==="entity"&&n.d&&n.t==="character");// n.d = chapter of death
+function drawTL(){if(!TW)return;const c=tctx;c.setTransform(DPR,0,0,DPR,0,0);c.clearRect(0,0,TW,TH);
+  const base=TH-22;c.fillStyle=css.line;c.fillRect(TL0,base,TW-TL0-TPAD,2);
+  // progress
+  c.fillStyle=css.accent;c.globalAlpha=.6;c.fillRect(TL0,base,chX(S.ch)-TL0,2);c.globalAlpha=1;
+  // ticks
+  const step=niceStep(D.max,(TW-TL0-TPAD)/70);c.fillStyle=css.mut;c.font="11px ui-sans-serif,system-ui";c.textAlign="center";c.textBaseline="top";
+  for(let v=step;v<=D.max;v+=step){const x=chX(v);c.fillRect(x,base+2,1,4);c.fillText(v,x,base+7)}
+  // marks
+  const lane=(y,list,color,h)=>{c.fillStyle=color;for(const x of list)c.fillRect(Math.round(chX(x))-0.5,y,1.5,h)};
+  lane(7,D.threads.map(t=>t.f).filter(Boolean),COL.thread,9);
+  lane(20,D.events.map(e=>e[0]).filter(Boolean),"#4f7fd9",9);
+  lane(33,deaths.map(n=>n.d),"#c43b30",9);
+  c.fillStyle=css.mut;c.textAlign="right";c.textBaseline="middle";c.font="10px ui-sans-serif,system-ui";
+  c.fillText("threads",TL0-8,11);c.fillText("events",TL0-8,24);c.fillText("deaths",TL0-8,37);c.fillText("chapter",TL0-8,base+12);
+  // playhead
+  const x=chX(S.ch);c.fillStyle=css.fg;c.fillRect(x-1,2,2,base);c.beginPath();c.arc(x,base+1,5,0,6.2832);c.fill();
+}
+function niceStep(max,n){const raw=max/Math.max(1,n),p=Math.pow(10,Math.floor(Math.log10(raw)));for(const m of[1,2,5,10])if(m*p>=raw)return Math.max(1,m*p);return Math.max(1,10*p)}
+
+/* ───────── panel ───────── */
+// rewind an entity's attributes/fields to chapter c by undoing later changes
+function stateAt(n,c){const attrs={...(n.attrs||{})},f={status:n.s,fate:n.fate,desc:n.desc,name:n.n};
+  for(let k=n.h.length-1;k>=0;k--){const [ch_,field,old,nw]=n.h[k];if(ch_<=c)break;
+    if(field.startsWith("attr.")){const a=field.slice(5);if(old===""||old==null)delete attrs[a];else attrs[a]=old}
+    else if(field in f)f[field]=old||(field==="status"?(n.t==="character"?"alive":"active"):"")}
+  return {attrs,...f}}
+const lnk=i=>`<a class="lnk" data-i="${i}">${esc(N[i].n)}</a>`;
+const chap=c=>c?`<span class="ch">ch${c}</span>`:"";
+function panel(){const R=$("#right");if(S.sel<0){R.innerHTML=`<div class="empty">Click a node to see its history, relations and fate.<br><br>Timeline: blue ticks are events, red are deaths, pink are planted threads.</div>`;return}
+  const n=N[S.sel],c=S.ch;let h="";
+  if(n.kind==="thread"){const t=n.th;
+    h+=`<div class="ttl">${esc(t.n)}</div><span class="tag">${t.k}</span><span class="tag ${t.s==="open"?"alive":""}">${t.s}</span>`;
+    h+=`<dl><dt>planted</dt><dd>ch${t.f}</dd>${t.p?`<dt>payoff by</dt><dd>ch${t.p}${t.s==="open"&&t.p<D.max?" ⚠ overdue":""}</dd>`:""}${t.c?`<dt>closed</dt><dd>ch${t.c}</dd>`:""}</dl>`;
+    h+=`<h2>Involves</h2><ul>${t.inv.map(x=>`<li>${lnk(x)}</li>`).join("")||"<li class=muted>—</li>"}</ul>`;
+    h+=`<h2>Notes</h2><ul>${t.notes.map(([ch_,tx])=>`<li class="${ch_>c?"future":""}">${chap(ch_)}${esc(tx)}</li>`).join("")}</ul>`;
+  }else{
+    const now=stateAt(n,c),st=now.status;
+    h+=`<div class="ttl">${esc(n.n)}</div><span class="tag" style="background:${COL[n.t]};color:#fff">${n.t}</span><span class="tag ${st}">${st}${c<D.max?" @ ch"+c:""}</span><span class="tag">${["","main","supporting","minor"][n.tier]||""}</span>`;
+    if(n.al.length)h+=`<div class="muted">aka ${n.al.map(esc).join(", ")}</div>`;
+    if(now.desc)h+=`<p>${esc(now.desc)}</p>`;
+    if(n.fate)h+=`<div class="fate ${n.d&&n.d>c?"future":""}"><b>Fate${n.d?" · ch"+n.d:""}:</b> ${esc(n.fate)}</div>`;
+    h+=`<dl><dt>first seen</dt><dd>ch${n.f||"?"}</dd><dt>last seen</dt><dd>ch${n.l||"?"}</dd><dt>chapters</dt><dd>${n.a}</dd></dl>`;
+    const at=Object.entries(now.attrs);if(at.length)h+=`<h2>State at ch${c}</h2><dl>${at.map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>`;
+    const rel=L.filter(l=>l.kind==="rel"&&(l.a===n.i||l.b===n.i));
+    if(rel.length){h+=`<h2>Relations</h2><ul>`+rel.sort((a,b)=>(a.until?1:0)-(b.until?1:0)||a.since-b.since).map(l=>{const out=l.a===n.i,o=out?l.b:l.a,fut=l.since>c,ended=l.until&&l.until<=c;
+      return `<li class="${fut?"future":""}" style="${ended?"opacity:.55":""}">${out?esc(l.rel)+" → "+lnk(o):lnk(o)+" "+esc(l.rel)+" → this"} <span class="muted">ch${l.since||"?"}${l.until?"–"+l.until:"–"}</span></li>`}).join("")+`</ul>`}
+    const co=L.filter(l=>l.kind==="co"&&(l.a===n.i||l.b===n.i)).sort((a,b)=>b.w-a.w);
+    if(co.length)h+=`<h2>Often appears with</h2><ul>${co.map(l=>`<li>${lnk(l.a===n.i?l.b:l.a)} <span class="muted">${esc(l.rel)}</span></li>`).join("")}</ul>`;
+    const th=thByNode.get(n.i)||[];if(th.length)h+=`<h2>Threads</h2><ul>${th.map(i=>`<li>${lnk(i)} <span class="muted">${N[i].th.s}</span></li>`).join("")}</ul>`;
+    const ev=evByNode.get(n.i)||[];if(ev.length)h+=`<h2>Events</h2><ul>${ev.map(k=>{const e=D.events[k];return `<li class="${e[0]>c?"future":""}">${chap(e[0])}<b>${esc(e[1])}</b>${e[3]?`<div class=muted>${esc(e[3])}</div>`:""}</li>`}).join("")}</ul>`;
+    if(n.h.length)h+=`<h2>History</h2><ul>${n.h.map(([ch_,f,o,nw,note])=>`<li class="${ch_>c?"future":""}">${chap(ch_)}<b>${esc(f.replace("attr.",""))}</b>: ${o?esc(o)+" → ":""}${esc(nw)}${note?`<div class=muted>${esc(note)}</div>`:""}</li>`).join("")}</ul>`;
+  }
+  R.innerHTML=h;
+}
+$("#right").addEventListener("click",e=>{const a=e.target.closest("a.lnk");if(a)select(+a.dataset.i,true)});
+
+/* ───────── stats ───────── */
+function updateStats(){const c=S.ch;let alive=0,dead=0,others=0,open=0,closed=0;
+  for(const n of N){if(n.f&&n.f>c)continue;if(n.kind==="thread"){goneAt(n,c)?closed++:open++;continue}
+    if(n.t==="character")goneAt(n,c)?dead++:alive++;else others++}
+  const ev=D.events.filter(e=>e[0]<=c).length,ch=D.chapters[c];
+  $("#asof").textContent=c;
+  $("#stats").innerHTML=(ch?`<div class="muted" style="margin-bottom:4px">${esc(ch)}</div>`:"")+
+   [["characters alive",alive],["characters dead",dead],["places, items…",others],["open threads",open],["resolved threads",closed],["events so far",ev]].map(([k,v])=>`<div><span>${k}</span><b>${v}</b></div>`).join("");
+  let shown=0;for(let i=0;i<N.length;i++)shown+=vis[i];$("#hint").textContent=`${shown} of ${N.length} nodes shown`;
+}
+
+/* ───────── controls ───────── */
+$("#title").textContent=D.title;$("#genre").textContent=D.genre||"";$("#chmax").textContent="/ "+D.max;
+const chn=$("#chn");chn.max=D.max;chn.value=S.ch;
+function setCh(c){S.ch=Math.min(D.max,Math.max(1,c|0));chn.value=S.ch;computeVis();drawTL();panel()}
+chn.oninput=()=>setCh(+chn.value);
+const types=$("#types");
+Object.keys(COL).forEach(t=>{const count=N.filter(n=>n.t===t).length;if(!count)return;const r=document.createElement("div");r.className="row";
+  r.innerHTML=`<span class="dot" style="background:${COL[t]}"></span>${LABEL[t]}<span class="cnt">${count}</span>`;
+  r.onclick=()=>{S.types.has(t)?S.types.delete(t):S.types.add(t);r.classList.toggle("off");computeVis()};types.appendChild(r)});
+[["#fGone","gone"],["#fEnded","ended"],["#fCo","co"],["#fThreads","threads"],["#fClosed","closed"],["#fMinor","minor"]].forEach(([id,k])=>{$(id).onchange=e=>{S[k]=e.target.checked;computeVis()}});
+function seg(id,key,num){$(id).addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+  $(id).querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));S[key]=num?+b.dataset.v:b.dataset.v;computeVis()})}
+seg("#labels","labels");seg("#depth","depth",true);
+$("#fit").onclick=()=>fit(true);
+$("#relayout").onclick=()=>{N.forEach(n=>{n.fx=null});store.set(LKEY,null);seed();S.alpha=1;loop()};
+$("#png").onclick=()=>{const a=document.createElement("a");a.download=(D.title||"story")+"-ch"+S.ch+".png";
+  const off=document.createElement("canvas");off.width=cv.width;off.height=cv.height;const o=off.getContext("2d");o.fillStyle=css.bg;o.fillRect(0,0,off.width,off.height);o.drawImage(cv,0,0);a.href=off.toDataURL("image/png");a.click()};
+$("#bL").onclick=()=>{$("#left").classList.toggle("open");$("#right").classList.remove("open")};
+$("#bR").onclick=()=>{$("#right").classList.toggle("open");$("#left").classList.remove("open")};
+let playT=null;$("#play").onclick=togglePlay;
+function togglePlay(){if(playT){clearInterval(playT);playT=null;$("#play").textContent="▶";$("#play").classList.remove("on");return}
+  if(S.ch>=D.max)setCh(1);$("#play").textContent="❚❚";$("#play").classList.add("on");
+  const stepN=Math.max(1,Math.round(D.max/300));playT=setInterval(()=>{if(S.ch>=D.max){togglePlay();return}setCh(S.ch+stepN)},60)}
+
+// search
+const dl=$("#names");const opts=[...N].sort((a,b)=>b.a-a.a);dl.innerHTML=opts.slice(0,3000).map(n=>`<option value="${esc(n.n)}">`).join("");
+const q=$("#q");
+function doSearch(){const v=q.value.trim().toLowerCase();if(!v)return;
+  const hit=opts.find(n=>n.n.toLowerCase()===v)||opts.find(n=>(n.al||[]).some(a=>a.toLowerCase()===v))||opts.find(n=>n.n.toLowerCase().startsWith(v))||opts.find(n=>n.n.toLowerCase().includes(v)||(n.al||[]).some(a=>a.toLowerCase().includes(v)));
+  if(hit){if(hit.f&&hit.f>S.ch)setCh(D.max);if(!S.types.has(hit.t)){S.types.add(hit.t);[...types.children].forEach(r=>{if(r.textContent.startsWith(LABEL[hit.t]))r.classList.remove("off")})}
+    if(!vis[hit.i]){if(goneAt(hit,S.ch)){S.gone=true;$("#fGone").checked=true}if(hit.tier===3){S.minor=true;$("#fMinor").checked=true}if(hit.kind==="thread"){S.threads=S.closed=true;$("#fThreads").checked=$("#fClosed").checked=true}}
+    select(hit.i,true)}}
+q.addEventListener("keydown",e=>{if(e.key==="Enter")doSearch();if(e.key==="Escape")q.blur()});q.addEventListener("change",doSearch);
+
+function select(i,center){S.sel=i;computeVis();panel();if(center&&i>=0)animateTo(N[i].x,N[i].y,Math.max(S.k,1.2));if(i>=0&&innerWidth<=900)$("#right").classList.add("open")}
+function animateTo(x,y,k){const s0={tx:S.tx,ty:S.ty,k:S.k},t0=performance.now();
+  const step=t=>{const p=Math.min(1,(t-t0)/350),e=1-Math.pow(1-p,3);S.k=s0.k+(k-s0.k)*e;S.tx=s0.tx+(-x*S.k-s0.tx)*e;S.ty=s0.ty+(-y*S.k-s0.ty)*e;S.dirty=true;if(p<1)requestAnimationFrame(step)};requestAnimationFrame(step)}
+function fit(anim){let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9,any=0;for(const n of N)if(vis[n.i]){any=1;x0=Math.min(x0,n.x-n.r);y0=Math.min(y0,n.y-n.r);x1=Math.max(x1,n.x+n.r);y1=Math.max(y1,n.y+n.r)}
+  if(!any)return;const k=Math.min(3,0.9*Math.min(W/(x1-x0||1),H/(y1-y0||1)));const cx=(x0+x1)/2,cy=(y0+y1)/2;
+  if(anim)animateTo(cx,cy,k);else{S.k=k;S.tx=-cx*k;S.ty=-cy*k;S.dirty=true}}
+
+/* ───────── pointer: pan, zoom, drag, hover, pinch ───────── */
+const ptrs=new Map();let drag=null,moved=false,pinch0=null;
+function pick(sx,sy){const [x,y]=toW(sx,sy);let best=-1,bd=1e9;for(const n of N){if(!vis[n.i])continue;const dx=n.x-x,dy=n.y-y,d=dx*dx+dy*dy,r=n.r+4/S.k;if(d<r*r&&d<bd){bd=d;best=n.i}}return best}
+const tip=$("#tip");
+function showTip(e,html){tip.innerHTML=html;tip.style.display="block";const r=tip.getBoundingClientRect();tip.style.left=Math.min(innerWidth-r.width-8,e.clientX+14)+"px";tip.style.top=Math.max(8,e.clientY-r.height-10)+"px"}
+cv.addEventListener("pointerdown",e=>{cv.setPointerCapture(e.pointerId);ptrs.set(e.pointerId,[e.offsetX,e.offsetY]);moved=false;
+  if(ptrs.size===2){const [a,b]=[...ptrs.values()];pinch0={d:Math.hypot(a[0]-b[0],a[1]-b[1]),k:S.k,tx:S.tx,ty:S.ty,mx:(a[0]+b[0])/2,my:(a[1]+b[1])/2};drag=null;return}
+  const i=pick(e.offsetX,e.offsetY);drag=i>=0?{node:i}:{pan:true,x:e.offsetX,y:e.offsetY,tx:S.tx,ty:S.ty}});
+cv.addEventListener("pointermove",e=>{const p=ptrs.get(e.pointerId);if(p){if(Math.abs(p[0]-e.offsetX)+Math.abs(p[1]-e.offsetY)>3)moved=true;ptrs.set(e.pointerId,[e.offsetX,e.offsetY])}
+  if(pinch0&&ptrs.size===2){const [a,b]=[...ptrs.values()];const d=Math.hypot(a[0]-b[0],a[1]-b[1]);zoomAt(pinch0.mx,pinch0.my,pinch0.k*d/pinch0.d,pinch0);return}
+  if(drag&&drag.pan&&moved){S.tx=drag.tx+e.offsetX-drag.x;S.ty=drag.ty+e.offsetY-drag.y;S.dirty=true;return}
+  if(drag&&drag.node!=null&&moved){const n=N[drag.node],[x,y]=toW(e.offsetX,e.offsetY);n.fx=n.x=x;n.fy=n.y=y;S.alpha=Math.max(S.alpha,0.05);loop();return}
+  if(!drag){const i=pick(e.offsetX,e.offsetY);if(i!==S.hov){S.hov=i;S.dirty=true;cv.style.cursor=i>=0?"pointer":"grab"}
+    if(i>=0){const n=N[i];showTip(e,`<b>${esc(n.n)}</b> <span class="muted">${n.t} · ${n.cs}</span>${n.desc?"<br>"+esc(n.desc).slice(0,160):""}`)}else tip.style.display="none"}});
+cv.addEventListener("pointerup",e=>{ptrs.delete(e.pointerId);if(ptrs.size<2)pinch0=null;
+  if(drag&&!moved){if(drag.node!=null)select(drag.node,false);else if(drag.pan)select(-1)}
+  if(drag&&drag.node!=null&&moved)saveLayout();drag=null});
+cv.addEventListener("pointerleave",()=>{if(S.hov>=0){S.hov=-1;S.dirty=true}tip.style.display="none"});
+cv.addEventListener("dblclick",e=>{const i=pick(e.offsetX,e.offsetY);if(i>=0){N[i].fx=null;S.alpha=Math.max(S.alpha,0.05);loop();saveLayout()}});
+function zoomAt(sx,sy,k,base){k=Math.min(8,Math.max(0.05,k));const b=base||S;const wx=(sx-W/2-b.tx)/b.k,wy=(sy-H/2-b.ty)/b.k;S.k=k;S.tx=sx-W/2-wx*k;S.ty=sy-H/2-wy*k;S.dirty=true}
+cv.addEventListener("wheel",e=>{e.preventDefault();zoomAt(e.offsetX,e.offsetY,S.k*Math.exp(-e.deltaY*(e.ctrlKey?0.01:0.0015)))},{passive:false});
+
+// timeline scrub + hover
+let tlDrag=false;
+tl.addEventListener("pointerdown",e=>{tl.setPointerCapture(e.pointerId);tlDrag=true;setCh(xCh(e.offsetX))});
+tl.addEventListener("pointermove",e=>{if(tlDrag){setCh(xCh(e.offsetX));return}
+  const c=xCh(e.offsetX),near=Math.max(1,Math.round(D.max/((TW-TL0-TPAD)/6)));
+  const ev=D.events.filter(x=>Math.abs(x[0]-c)<=near).slice(0,5),de=deaths.filter(n=>Math.abs(n.d-c)<=near).slice(0,5),th=D.threads.filter(t=>Math.abs(t.f-c)<=near).slice(0,3);
+  const ttl=D.chapters[c];
+  showTip(e,`<b>ch${c}</b>${ttl?" · "+esc(ttl):""}`+ev.map(x=>`<br><span style="color:#4f7fd9">●</span> ch${x[0]} ${esc(x[1])}`).join("")+de.map(n=>`<br><span style="color:#c43b30">✝</span> ch${n.d} ${esc(n.n)}`).join("")+th.map(t=>`<br><span style="color:${COL.thread}">◆</span> ch${t.f} ${esc(t.n)}`).join(""))});
+tl.addEventListener("pointerup",()=>{tlDrag=false});tl.addEventListener("pointerleave",()=>{tip.style.display="none"});
+
+addEventListener("keydown",e=>{if(e.target.tagName==="INPUT")return;
+  if(e.key==="/"){e.preventDefault();q.focus();q.select()}else if(e.key==="Escape")select(-1);else if(e.key==="f"||e.key==="F")fit(true);
+  else if(e.key===" "){e.preventDefault();togglePlay()}else if(e.key==="ArrowRight")setCh(S.ch+1);else if(e.key==="ArrowLeft")setCh(S.ch-1)});
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change",readCss);
+new ResizeObserver(resize).observe(cv.parentElement);new ResizeObserver(resize).observe(tl.parentElement);
+
+/* ───────── main loop ───────── */
+let running=false,saved=false;
+function loop(){if(running)return;running=true;requestAnimationFrame(frame)}
+function frame(){const t0=performance.now();
+  if(S.alpha>0.004){do{tick()}while(performance.now()-t0<10&&S.alpha>0.004&&N.length<1500);saved=false}
+  else if(!saved){saveLayout();saved=true}
+  if(S.dirty)draw();
+  requestAnimationFrame(frame)}
+readCss();resize();seed();computeVis();
+if(S.alpha<0.1){fit(false)}else{for(let i=0;i<Math.min(300,Math.ceil(60000/Math.max(1,N.length)));i++)tick();fit(false)}
+loop();
+let fitted=false;setTimeout(()=>{if(!fitted){fit(true);fitted=true}},1600);
+</script>
+</body>
+</html>

@@ -1,0 +1,788 @@
+{
+ "meta":{
+  "title":"Ashes of Azure Peak",
+  "genre":"dark cultivation",
+  "pov":"close third, Lin Feng",
+  "tense":"past",
+  "words_min":60,
+  "words_max":600,
+  "created":"2026-10-29T11:34:42",
+  "schema":2
+ },
+ "config":{
+  "keep_snapshots":25,
+  "obsidian":true,
+  "context_recent":3,
+  "rollup_every":50
+ },
+ "entities":{
+  "lin-feng":{
+   "id":"lin-feng",
+   "type":"character",
+   "name":"Lin Feng",
+   "aliases":[
+    "Feng"
+   ],
+   "desc":"Outer disciple, orphan; sweeps the Medicine Hall",
+   "status":"alive",
+   "fate":"",
+   "attrs":{
+    "realm":"Foundation 1",
+    "location":"Inner court, Azure Sect",
+    "rank":"inner-court servant"
+   },
+   "tier":1,
+   "first_seen":1,
+   "last_seen":8,
+   "appearances":[
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "history":[
+    {
+     "chapter":1,
+     "field":"created",
+     "new":"Outer disciple, orphan; sweeps the Medicine Hall"
+    },
+    {
+     "chapter":3,
+     "field":"attr.injury",
+     "new":"shallow cut, throat"
+    },
+    {
+     "chapter":4,
+     "field":"attr.realm",
+     "new":"Foundation 1",
+     "old":"Qi Condensation 3",
+     "note":"breakthrough on the Black River ice"
+    },
+    {
+     "chapter":4,
+     "field":"attr.injury",
+     "new":"∅",
+     "old":"shallow cut, throat",
+     "note":"breakthrough on the Black River ice"
+    },
+    {
+     "chapter":5,
+     "field":"note",
+     "new":"knows Wei Shan bought the poison; told no one"
+    },
+    {
+     "chapter":7,
+     "field":"attr.location",
+     "new":"Inner court, Azure Sect",
+     "old":"Azure Sect",
+     "note":"chosen by Sect Master Su"
+    },
+    {
+     "chapter":7,
+     "field":"attr.rank",
+     "new":"inner-court servant",
+     "note":"chosen by Sect Master Su"
+    }
+   ]
+  },
+  "elder-mo":{
+   "id":"elder-mo",
+   "type":"character",
+   "name":"Elder Mo",
+   "aliases":[],
+   "desc":"Medicine Hall elder; keeps his own counsel",
+   "status":"dead",
+   "fate":"Poisoned through the tea Lin Feng brewed; body burned on Wei Shan's order",
+   "attrs":{},
+   "tier":2,
+   "first_seen":1,
+   "last_seen":5,
+   "appearances":[
+    1,
+    2,
+    3,
+    5
+   ],
+   "history":[
+    {
+     "chapter":1,
+     "field":"created",
+     "new":"Medicine Hall elder; keeps his own counsel"
+    },
+    {
+     "chapter":2,
+     "field":"status",
+     "new":"dead",
+     "old":"alive"
+    },
+    {
+     "chapter":2,
+     "field":"fate",
+     "new":"Poisoned through the tea Lin Feng brewed; body burned on Wei Shan's order"
+    }
+   ]
+  },
+  "mo-qing":{
+   "id":"mo-qing",
+   "type":"character",
+   "name":"Mo Qing",
+   "aliases":[],
+   "desc":"Elder Mo's nephew, inner disciple",
+   "status":"alive",
+   "fate":"",
+   "attrs":{
+    "realm":"Foundation 1"
+   },
+   "tier":1,
+   "first_seen":1,
+   "last_seen":6,
+   "appearances":[
+    1,
+    2,
+    3,
+    5,
+    6
+   ],
+   "history":[
+    {
+     "chapter":1,
+     "field":"created",
+     "new":"Elder Mo's nephew, inner disciple"
+    }
+   ]
+  },
+  "su-yan":{
+   "id":"su-yan",
+   "type":"character",
+   "name":"Su Yan",
+   "aliases":[],
+   "desc":"Sect master's daughter",
+   "status":"alive",
+   "fate":"",
+   "attrs":{
+    "realm":"Foundation 3"
+   },
+   "tier":1,
+   "first_seen":1,
+   "last_seen":7,
+   "appearances":[
+    1,
+    4,
+    7
+   ],
+   "history":[
+    {
+     "chapter":1,
+     "field":"created",
+     "new":"Sect master's daughter"
+    }
+   ]
+  },
+  "sect-master-su":{
+   "id":"sect-master-su",
+   "type":"character",
+   "name":"Sect Master Su",
+   "aliases":[
+    "the Sect Master"
+   ],
+   "desc":"Head of the Azure Sect; Su Yan's father",
+   "status":"alive",
+   "fate":"",
+   "attrs":{},
+   "tier":2,
+   "first_seen":1,
+   "last_seen":7,
+   "appearances":[
+    1,
+    7
+   ],
+   "history":[
+    {
+     "chapter":1,
+     "field":"created",
+     "new":"Head of the Azure Sect; Su Yan's father"
+    }
+   ]
+  },
+  "azure-sect":{
+   "id":"azure-sect",
+   "type":"location",
+   "name":"Azure Sect",
+   "aliases":[],
+   "desc":"",
+   "status":"active",
+   "fate":"",
+   "attrs":{},
+   "tier":1,
+   "first_seen":1,
+   "last_seen":1,
+   "appearances":[
+    1
+   ],
+   "history":[
+    {
+     "chapter":1,
+     "field":"created",
+     "new":""
+    }
+   ]
+  },
+  "medicine-hall":{
+   "id":"medicine-hall",
+   "type":"location",
+   "name":"Medicine Hall",
+   "aliases":[],
+   "desc":"",
+   "status":"active",
+   "fate":"",
+   "attrs":{},
+   "tier":2,
+   "first_seen":1,
+   "last_seen":5,
+   "appearances":[
+    1,
+    2,
+    5
+   ],
+   "history":[
+    {
+     "chapter":1,
+     "field":"created",
+     "new":""
+    }
+   ]
+  },
+  "black-river":{
+   "id":"black-river",
+   "type":"location",
+   "name":"Black River",
+   "aliases":[],
+   "desc":"",
+   "status":"active",
+   "fate":"",
+   "attrs":{},
+   "tier":2,
+   "first_seen":1,
+   "last_seen":4,
+   "appearances":[
+    1,
+    3,
+    4
+   ],
+   "history":[
+    {
+     "chapter":1,
+     "field":"created",
+     "new":""
+    }
+   ]
+  },
+  "mo-clan":{
+   "id":"mo-clan",
+   "type":"faction",
+   "name":"Mo Clan",
+   "aliases":[],
+   "desc":"Old alchemy clan, fallen from favour",
+   "status":"active",
+   "fate":"",
+   "attrs":{},
+   "tier":2,
+   "first_seen":1,
+   "last_seen":3,
+   "appearances":[
+    1,
+    3
+   ],
+   "history":[
+    {
+     "chapter":1,
+     "field":"created",
+     "new":"Old alchemy clan, fallen from favour"
+    }
+   ]
+  },
+  "jade-pendant":{
+   "id":"jade-pendant",
+   "type":"item",
+   "name":"Jade Pendant",
+   "aliases":[],
+   "desc":"Cracked pendant from his mother",
+   "status":"active",
+   "fate":"",
+   "attrs":{},
+   "tier":1,
+   "first_seen":1,
+   "last_seen":3,
+   "appearances":[
+    1,
+    2,
+    3
+   ],
+   "history":[
+    {
+     "chapter":1,
+     "field":"created",
+     "new":"Cracked pendant from his mother"
+    },
+    {
+     "chapter":2,
+     "field":"status",
+     "new":"lost",
+     "old":"active"
+    },
+    {
+     "chapter":3,
+     "field":"status",
+     "new":"active",
+     "old":"lost"
+    }
+   ]
+  },
+  "wei-shan":{
+   "id":"wei-shan",
+   "type":"character",
+   "name":"Wei Shan",
+   "aliases":[],
+   "desc":"Medicine Hall steward, newly appointed",
+   "status":"missing",
+   "fate":"",
+   "attrs":{},
+   "tier":2,
+   "first_seen":2,
+   "last_seen":8,
+   "appearances":[
+    2,
+    5,
+    6,
+    7,
+    8
+   ],
+   "history":[
+    {
+     "chapter":2,
+     "field":"created",
+     "new":"Medicine Hall steward, newly appointed"
+    },
+    {
+     "chapter":8,
+     "field":"status",
+     "new":"missing",
+     "old":"alive",
+     "note":"fled the sect after the failed poisoning"
+    }
+   ]
+  },
+  "old-hua":{
+   "id":"old-hua",
+   "type":"character",
+   "name":"Old Hua",
+   "aliases":[],
+   "desc":"Ferry woman on the Black River",
+   "status":"missing",
+   "fate":"",
+   "attrs":{
+    "location":"Black River"
+   },
+   "tier":3,
+   "first_seen":3,
+   "last_seen":4,
+   "appearances":[
+    3,
+    4
+   ],
+   "history":[
+    {
+     "chapter":3,
+     "field":"created",
+     "new":"Ferry woman on the Black River"
+    },
+    {
+     "chapter":4,
+     "field":"status",
+     "new":"missing",
+     "old":"alive"
+    }
+   ]
+  },
+  "black-heartroot":{
+   "id":"black-heartroot",
+   "type":"item",
+   "name":"Black Heartroot",
+   "aliases":[],
+   "desc":"Slow poison used in alchemy",
+   "status":"active",
+   "fate":"",
+   "attrs":{},
+   "tier":3,
+   "first_seen":5,
+   "last_seen":8,
+   "appearances":[
+    5,
+    8
+   ],
+   "history":[
+    {
+     "chapter":5,
+     "field":"created",
+     "new":"Slow poison used in alchemy"
+    }
+   ]
+  }
+ },
+ "relations":[
+  {
+   "a":"lin-feng",
+   "b":"jade-pendant",
+   "rel":"owns",
+   "since":1,
+   "until":2,
+   "end_note":"cord cut overnight"
+  },
+  {
+   "a":"elder-mo",
+   "b":"mo-clan",
+   "rel":"member of",
+   "since":1,
+   "until":null
+  },
+  {
+   "a":"mo-qing",
+   "b":"mo-clan",
+   "rel":"member of",
+   "since":1,
+   "until":null
+  },
+  {
+   "a":"elder-mo",
+   "b":"mo-qing",
+   "rel":"uncle of",
+   "since":1,
+   "until":null
+  },
+  {
+   "a":"medicine-hall",
+   "b":"azure-sect",
+   "rel":"part of",
+   "since":1,
+   "until":null
+  },
+  {
+   "a":"sect-master-su",
+   "b":"azure-sect",
+   "rel":"leads",
+   "since":1,
+   "until":null
+  },
+  {
+   "a":"sect-master-su",
+   "b":"su-yan",
+   "rel":"father of",
+   "since":1,
+   "until":null
+  },
+  {
+   "a":"mo-qing",
+   "b":"lin-feng",
+   "rel":"despises",
+   "since":1,
+   "until":null
+  },
+  {
+   "a":"mo-qing",
+   "b":"lin-feng",
+   "rel":"suspects",
+   "since":2,
+   "until":6,
+   "end_note":"admits he was wrong"
+  },
+  {
+   "a":"old-hua",
+   "b":"jade-pendant",
+   "rel":"owns",
+   "since":3,
+   "until":null
+  },
+  {
+   "a":"su-yan",
+   "b":"lin-feng",
+   "rel":"watches",
+   "since":4,
+   "until":null
+  },
+  {
+   "a":"sect-master-su",
+   "b":"lin-feng",
+   "rel":"employs",
+   "since":7,
+   "until":null
+  },
+  {
+   "a":"wei-shan",
+   "b":"sect-master-su",
+   "rel":"tried to poison",
+   "since":8,
+   "until":null
+  }
+ ],
+ "threads":{
+  "who-forged-the-pendant":{
+   "id":"who-forged-the-pendant",
+   "title":"Who forged the pendant?",
+   "kind":"foreshadow",
+   "status":"open",
+   "planted":1,
+   "payoff_by":40,
+   "closed_in":null,
+   "involves":[
+    "lin-feng",
+    "jade-pendant",
+    "mo-clan"
+   ],
+   "notes":[
+    {
+     "chapter":1,
+     "text":"planned reveal: Mo Clan made it for Feng's mother"
+    },
+    {
+     "chapter":2,
+     "text":"pendant stolen the night Mo dies"
+    },
+    {
+     "chapter":3,
+     "text":"crest is the Mo Clan seal"
+    }
+   ]
+  },
+  "who-poisoned-elder-mo":{
+   "id":"who-poisoned-elder-mo",
+   "title":"Who poisoned Elder Mo?",
+   "kind":"mystery",
+   "status":"open",
+   "planted":2,
+   "payoff_by":30,
+   "closed_in":null,
+   "involves":[
+    "elder-mo",
+    "lin-feng",
+    "wei-shan",
+    "black-heartroot"
+   ],
+   "notes":[
+    {
+     "chapter":5,
+     "text":"ledger: Wei Shan bought black heartroot twice in Mo's name; only Feng knows"
+    },
+    {
+     "chapter":8,
+     "text":"Wei Shan's second attempt (on Sect Master Su) foiled; he flees"
+    }
+   ]
+  },
+  "what-does-mo-qing-want":{
+   "id":"what-does-mo-qing-want",
+   "title":"What does Mo Qing want?",
+   "kind":"mystery",
+   "status":"closed",
+   "planted":3,
+   "payoff_by":12,
+   "closed_in":6,
+   "involves":[
+    "mo-qing",
+    "lin-feng"
+   ],
+   "notes":[
+    {
+     "chapter":6,
+     "text":"a letter Elder Mo kept for Feng; burned by Wei Shan"
+    }
+   ]
+  },
+  "elder-mo-s-letter":{
+   "id":"elder-mo-s-letter",
+   "title":"Elder Mo's letter",
+   "kind":"mystery",
+   "status":"open",
+   "planted":6,
+   "payoff_by":60,
+   "closed_in":null,
+   "involves":[
+    "elder-mo",
+    "lin-feng",
+    "wei-shan"
+   ],
+   "notes":[
+    {
+     "chapter":6,
+     "text":"burned, but did someone copy it?"
+    }
+   ]
+  },
+  "how-did-the-sect-master-know":{
+   "id":"how-did-the-sect-master-know",
+   "title":"How did the Sect Master know?",
+   "kind":"mystery",
+   "status":"open",
+   "planted":7,
+   "payoff_by":20,
+   "closed_in":null,
+   "involves":[
+    "sect-master-su",
+    "su-yan",
+    "lin-feng"
+   ],
+   "notes":[]
+  }
+ },
+ "events":{
+  "death-of-elder-mo":{
+   "id":"death-of-elder-mo",
+   "title":"Death of Elder Mo",
+   "chapter":2,
+   "involves":[
+    "elder-mo",
+    "lin-feng",
+    "mo-qing",
+    "wei-shan"
+   ],
+   "note":"",
+   "when":""
+  },
+  "lin-feng-reaches-foundation":{
+   "id":"lin-feng-reaches-foundation",
+   "title":"Lin Feng reaches Foundation",
+   "chapter":4,
+   "involves":[
+    "lin-feng",
+    "su-yan"
+   ],
+   "note":"",
+   "when":""
+  },
+  "koi-of-the-inner-garden":{
+   "id":"koi-of-the-inner-garden",
+   "title":"Koi of the inner garden",
+   "chapter":8,
+   "involves":[
+    "lin-feng",
+    "wei-shan",
+    "sect-master-su"
+   ],
+   "note":"Feng foils the poisoning",
+   "when":""
+  }
+ },
+ "chapters":{
+  "1":{
+   "title":"Chapter 1: Cold Pills",
+   "words":97,
+   "entities":[
+    "lin-feng",
+    "mo-qing",
+    "medicine-hall",
+    "elder-mo",
+    "jade-pendant",
+    "su-yan",
+    "azure-sect",
+    "black-river"
+   ],
+   "committed":"2026-10-29T11:34:43"
+  },
+  "2":{
+   "title":"Chapter 2: The Elder's Cup",
+   "words":94,
+   "entities":[
+    "lin-feng",
+    "wei-shan",
+    "medicine-hall",
+    "elder-mo",
+    "jade-pendant",
+    "mo-qing"
+   ],
+   "committed":"2026-10-29T11:34:43"
+  },
+  "3":{
+   "title":"Chapter 3: Ash on the River",
+   "words":84,
+   "entities":[
+    "mo-qing",
+    "lin-feng",
+    "elder-mo",
+    "black-river",
+    "old-hua",
+    "jade-pendant",
+    "mo-clan"
+   ],
+   "committed":"2026-10-29T11:34:43"
+  },
+  "4":{
+   "title":"Chapter 4: Foundation",
+   "words":88,
+   "entities":[
+    "lin-feng",
+    "black-river",
+    "su-yan",
+    "old-hua"
+   ],
+   "committed":"2026-10-29T11:34:43"
+  },
+  "5":{
+   "title":"Chapter 5: Ledgers",
+   "words":76,
+   "entities":[
+    "wei-shan",
+    "lin-feng",
+    "medicine-hall",
+    "black-heartroot",
+    "elder-mo",
+    "mo-qing"
+   ],
+   "committed":"2026-10-29T11:34:43"
+  },
+  "6":{
+   "title":"Chapter 6: The Steps",
+   "words":72,
+   "entities":[
+    "mo-qing",
+    "wei-shan",
+    "lin-feng"
+   ],
+   "committed":"2026-10-29T11:34:43"
+  },
+  "7":{
+   "title":"Chapter 7: The Sect Master's Garden",
+   "words":67,
+   "entities":[
+    "lin-feng",
+    "sect-master-su",
+    "su-yan",
+    "wei-shan"
+   ],
+   "committed":"2026-10-29T11:34:43"
+  },
+  "8":{
+   "title":"Chapter 8: Heartroot",
+   "words":86,
+   "entities":[
+    "wei-shan",
+    "lin-feng",
+    "black-heartroot"
+   ],
+   "committed":"2026-10-29T11:34:43"
+  }
+ },
+ "arcs":{
+  "1":{
+   "title":"The Elder's Cup",
+   "from":1,
+   "to":8,
+   "file":"summaries/arcs/arc-01.md"
+  }
+ },
+ "position":{
+  "last_chapter":8
+ }
+}

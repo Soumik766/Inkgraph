@@ -1,0 +1,16 @@
+# ── Safety: this repo is the skill only. A novel project must never be committed here. ──
+/.inkgraph/
+/chapters/
+/summaries/
+/bible/
+/graph/
+/export/
+/story-map.html
+/CLAUDE.md
+**/.inkgraph/
+# the bundled example project is the one exception
+!/examples/**
+
+__pycache__/
+*.pyc
+*.tmp
