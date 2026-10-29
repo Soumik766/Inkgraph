@@ -4,7 +4,7 @@
 
 **Write a 3,000-chapter novel with Claude Code and never lose the plot.**
 
-A Claude Code skill that gives your AI co-writer a persistent memory: a story graph of every character, death, relationship, item, and plot thread, plus an offline interactive story map.
+A Claude Code skill that lets **the AI keep track of your story**. It gives your AI co-writer a persistent memory: a story graph of every character, death, relationship, item, and plot thread, so it writes chapter 2,000 as consistently as chapter 2. You get an offline interactive story map to see it all.
 
 [![Claude Code skill](https://img.shields.io/badge/Claude_Code-skill-d97757)](https://docs.claude.com/en/docs/claude-code/skills)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-3776ab)](#install)
@@ -23,6 +23,8 @@ A Claude Code skill that gives your AI co-writer a persistent memory: a story gr
 AI writing tools forget. By chapter 200, the dead mentor is giving advice again, the sword the hero lost in chapter 90 is back in his hand, and the mystery planted in chapter 12 is never paid off. Context windows can't hold a webnovel, and pasting "previously on…" summaries doesn't scale.
 
 ## How Inkgraph solves it
+
+**Inkgraph is the AI's memory of your story.** You write with Claude as usual, and Inkgraph keeps track of everything behind the scenes: who's alive, who's dead and how they died, who owns what, who's allied with whom, what each character knows, and which mysteries are still open. The graph is built for the AI to read, not for you to maintain. Claude updates it after every chapter, and you only approve the changes.
 
 Claude never rereads your book. Before each chapter it pulls a **compact, prioritised context bundle** from the graph: recent chapter summaries, the current state of everyone in the scene, what they own, who they're allied with or hunting, and which foreshadowing is due. After each chapter, every change is **staged, shown to you as a diff, and saved only when you approve**.
 
