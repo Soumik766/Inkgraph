@@ -41,6 +41,7 @@ context → draft → style pass → continuity check → summary → staged cha
 - 🗺️ **Offline story map.** A single HTML file with time travel through chapters, state-at-any-chapter, and a timeline of deaths, events, and threads (details below).
 - 📚 **Layered memory.** Chapter summaries roll up into arc summaries, so chapter 2,400 knows about chapter 40.
 - ✅ **Safe by design.** Every change is approved before it's saved, with multi-level undo, atomic writes, and compressed snapshots.
+- 🪝 **Pre-commit hooks.** Plug in your own per-chapter checks (`ink config pre_commit="…"`), and a failing chapter can't be committed. Companion skills can enforce house rules this way.
 - 📄 **Export** to Word (.docx), plain text, or Markdown, from approved chapters only.
 - 🗂️ **Obsidian vault** generated alongside, if you like Obsidian's graph view.
 

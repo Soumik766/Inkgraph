@@ -68,6 +68,7 @@ def build():
     p = cmd("diff", C.diff, "show staged changes, detections, blockers"); ch(p)
     p = cmd("commit", C.commit, "apply staged changes (after author approval)"); ch(p)
     p.add_argument("--setup", action="store_true"); p.add_argument("--yes", action="store_true")
+    p.add_argument("--no-verify", action="store_true", help="skip the pre_commit hook")
     p = cmd("discard", C.discard, "drop all staged ops, or op N"); p.add_argument("index", type=int, nargs="?")
     p = cmd("undo", C.undo, "revert the last commit"); p.add_argument("--yes", action="store_true")
 

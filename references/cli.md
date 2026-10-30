@@ -27,7 +27,7 @@ An entity reference can be an id, a name, or an alias, and is case-insensitive. 
 | command | effect |
 |---|---|
 | `diff -c N` | staged changes, detected appearances (with counts), word count, gone-character and unknown-name warnings, the summary, and blockers (exit 2 if anything blocks) |
-| `commit -c N --yes` | gzip snapshot → apply → draft moves to final → record appearances → regenerate the touched notes |
+| `commit -c N --yes [--no-verify]` | gzip snapshot → apply → draft moves to final → record appearances → regenerate the touched notes |
 | `commit --setup --yes` | worldbuilding-only commit |
 | `discard [i]` | drop all staged ops, or op #i |
 | `undo --yes` | revert the last commit: the chapter goes back to draft and its ops are re-staged. Multi-level, up to `keep_snapshots` |
@@ -45,7 +45,7 @@ An entity reference can be an id, a name, or an alias, and is case-insensitive. 
 | `find Q [--text] [--limit 40]` | search entities, threads, and events (`--text` also searches summaries) |
 | `list [--type character] [--status dead] [--tier 1]` · `threads [--all]` | listings |
 | `rollup --from A --to B` · `arc N --title "…" --from A --to B` | arc summaries |
-| `config [key=value …]` | settings: `keep_snapshots` (25), `obsidian` (true), `context_recent` (3), `rollup_every` (50), plus meta such as `words_min`, `words_max`, `pov` |
+| `config [key=value …]` | settings: `keep_snapshots` (25), `obsidian` (true), `context_recent` (3), `rollup_every` (50), `pre_commit` (a shell command run before every chapter commit; `{chapter}` is substituted; a non-zero exit blocks the commit, `--no-verify` bypasses it), plus meta such as `words_min`, `words_max`, `pov` |
 
 ## Views & export
 

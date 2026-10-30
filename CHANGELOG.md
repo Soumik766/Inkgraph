@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.3.0 — 2026-10-30
+- `pre_commit` hook: a project-defined command runs before every chapter commit (`{chapter}` substituted); a non-zero exit blocks it. `ink commit --no-verify` bypasses it.
+
 ## 0.2.0 — 2026-10-29
 First public release as **Inkgraph**.
 

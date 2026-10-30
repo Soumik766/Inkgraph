@@ -2,6 +2,7 @@
 import copy
 import json
 import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -183,6 +184,8 @@ def commit(a, P):
     r = plan(P, ch)
     if r["errors"]:
         diff(a, P)
+    if ch is not None and P.cfg.get("pre_commit") and not a.no_verify:
+        run_hook(P, P.cfg["pre_commit"], ch)
     if not a.yes:
         diff(a, P)
         if not sys.stdin.isatty():
@@ -226,6 +229,17 @@ def commit(a, P):
     last_arc_end = max([x["to"] or 0 for x in P.g["arcs"].values()] + [0])
     if ch and ch - last_arc_end >= P.cfg.get("rollup_every", 50):
         out(f"⚠ {ch - last_arc_end} chapters since the last arc summary — do a rollup (`ink rollup`)")
+
+
+def run_hook(P, cmd, ch):
+    """Project-defined gate (config pre_commit; '{chapter}' is substituted). Non-zero exit blocks the commit."""
+    cmd = cmd.replace("{chapter}", str(ch))
+    out(f"── pre-commit hook: {cmd}")
+    sys.stdout.flush()
+    res = subprocess.run(cmd, shell=True, cwd=str(P.root))
+    if res.returncode != 0:
+        die(f"pre-commit hook failed (exit {res.returncode}) — chapter {ch} not committed. "
+            "Fix what it reports, or bypass deliberately with --no-verify")
 
 
 def discard(a, P):

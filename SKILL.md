@@ -36,7 +36,7 @@ Every command: `references/cli.md`. Run commands from inside the project folder,
 4. **Continuity.** `$INK check -c N`. Fix every ⚠, or confirm it's intentional (a flashback or memory). Every "names not in graph" entry gets an `add`, or is consciously ignored.
 5. **Summary.** Write `summaries/chapters/ch-NNNN.md` per `references/summaries.md`, including who-knows-what and planted foreshadowing.
 6. **Stage everything in one call.** Write all of this chapter's changes as lines for `$INK batch` (heredoc). The batch is all-or-nothing, and any error names the failing line. Use the checklist in `references/summaries.md`. Always include `-c N`.
-7. **Diff → approval → commit.** `$INK diff -c N` → show it → yes → `$INK commit -c N --yes`.
+7. **Diff → approval → commit.** `$INK diff -c N` → show it → yes → `$INK commit -c N --yes`. If the project has a `pre_commit` hook (`$INK config`) and it fails, fix what it reports and retry. Never pass `--no-verify` unless the author explicitly asks.
 8. **Rollup.** When `commit` or `status` warns that ~50 chapters have no arc summary, do an arc rollup (`references/summaries.md`).
 
 Example step 6:

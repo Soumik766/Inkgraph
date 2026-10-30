@@ -8,7 +8,7 @@ from . import ops as O
 from .util import STATE, InkError, die, dump, now, read, write_atomic
 
 SCHEMA = 2
-DEFAULT_CONFIG = {"keep_snapshots": 25, "obsidian": True, "context_recent": 3, "rollup_every": 50}
+DEFAULT_CONFIG = {"keep_snapshots": 25, "obsidian": True, "context_recent": 3, "rollup_every": 50, "pre_commit": ""}
 
 
 def new_graph(title, genre="", pov="", tense="", words_min=1800, words_max=3000):

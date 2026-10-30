@@ -166,6 +166,18 @@ class TestWorkflow(unittest.TestCase):
         self.assertIn("refusing", out)
         self.assertFalse(inside.exists())
 
+    def test_pre_commit_hook_blocks_and_bypass(self):
+        self.p.chapter(1, "Lin Feng.")
+        self.p.run("config", 'pre_commit=python3 -c "import sys; sys.exit({chapter} == 1)"')
+        code, out = self.p.run("commit", "-c", "1", "--yes", ok=False)
+        self.assertEqual(code, 1)
+        self.assertIn("pre-commit hook failed", out)
+        self.assertFalse((self.p.root / "chapters/final/ch-0001.md").exists())
+        self.p.run("commit", "-c", "1", "--yes", "--no-verify")
+        self.assertTrue((self.p.root / "chapters/final/ch-0001.md").exists())
+        self.p.chapter(2, "Lin Feng.")
+        self.p.run("commit", "-c", "2", "--yes")  # hook passes for chapter 2
+
     def test_snapshot_pruning(self):
         self.p.run("config", "keep_snapshots=2")
         for n in range(1, 5):
